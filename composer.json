@@ -1,0 +1,34 @@
+{
+  "name": "fypex/gamivo-api-client",
+  "description": "Gamivo client",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fypex",
+      "email": "endtimes104@gmail.com"
+    }
+  ],
+  "type": "library",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Fypex\\GamivoClient\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^7.3",
+    "ext-json": "*",
+    "php-http/curl-client": "^2.0",
+    "php-http/message": "^1.7",
+    "php-http/message-factory": "^1.0",
+    "psr/http-message": "^1.0",
+    "symfony/http-client": "^5.3",
+    "zendframework/zend-diactoros": "^2.1",
+    "ext-curl": "*"
+  },
+  "config": {
+    "sort-packages": true,
+    "secure-http": false
+  }
+}
