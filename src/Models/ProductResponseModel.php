@@ -37,7 +37,7 @@ class ProductResponseModel
         $this->notice = $data['notice'];
         $this->region = $data['region'];
         $this->release_date = $data['release_date'];
-        $this->lowest_price = $data['lowest_price'];
+        $this->lowest_price = $data['lowest_price'] ?? 0;
 
     }
 

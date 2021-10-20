@@ -7,6 +7,7 @@ use Fypex\GamivoClient\Denormalizer\Accounts\AccountsGetData;
 use Fypex\GamivoClient\Denormalizer\Products\Product;
 use Fypex\GamivoClient\Denormalizer\Products\Products as ProductsDenormalizer;
 use Fypex\GamivoClient\Exception\GeneralException;
+use Fypex\GamivoClient\Filters\ProductsFilter;
 use Fypex\GamivoClient\GamivoClient;
 use Fypex\GamivoClient\Models\ProductResponseModel;
 use Fypex\GamivoClient\Request\links\AccountsLinks;
@@ -67,6 +68,23 @@ class Products extends GamivoClient
         $response = $this->client->sendRequest($request);
         $data = $this->handleResponse($response);
         return (new Product())->denormalize($data);
+
+    }
+    /**
+     * @return array<ProductResponseModel>
+     */
+    public function getProducts(?ProductsFilter $filter = null): array
+    {
+
+        $request = $this->messageFactory->createRequest(
+            'GET',
+            $this->links->getProducts($filter),
+            $this->getHeaders('application/json', true)
+        );
+
+        $response = $this->client->sendRequest($request);
+        $data = $this->handleResponse($response);
+        return (new ProductsDenormalizer())->denormalize($data);
 
     }
 

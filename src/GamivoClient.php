@@ -5,6 +5,7 @@ namespace Fypex\GamivoClient;
 use Fypex\GamivoClient\Credentials\GamivoCredentials;
 use Fypex\GamivoClient\Exception\GeneralException;
 use Fypex\GamivoClient\Request\Accounts;
+use Fypex\GamivoClient\Request\Offers;
 use Fypex\GamivoClient\Request\ProductOffers;
 use Fypex\GamivoClient\Request\Products;
 use Http\Client\HttpClient;
@@ -31,17 +32,22 @@ class GamivoClient
 
     public function accounts(): Accounts
     {
-        return new Accounts($this->credentials);
+        return new Accounts($this->credentials, $this->client);
+    }
+
+    public function offers(): Offers
+    {
+        return new Offers($this->credentials, $this->client);
     }
 
     public function products(): Products
     {
-        return new Products($this->credentials);
+        return new Products($this->credentials, $this->client);
     }
 
     public function productOffers(): ProductOffers
     {
-        return new ProductOffers($this->credentials);
+        return new ProductOffers($this->credentials, $this->client);
     }
 
     protected function getAuthorizationToken(): string
