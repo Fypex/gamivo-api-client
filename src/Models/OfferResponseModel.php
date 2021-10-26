@@ -19,6 +19,7 @@ class OfferResponseModel
     private $seller_price;
     private $wholesale_seller_price_tier_one;
     private $wholesale_seller_price_tier_two;
+    private $product;
 
     public function __construct($offer)
     {
@@ -109,6 +110,15 @@ class OfferResponseModel
     public function getWholesaleSellerPriceTierTwo(): float
     {
         return $this->wholesale_seller_price_tier_two;
+    }
+
+    public function setProduct(ProductResponseModel $product){
+        $this->product = $product;
+    }
+
+    public function getProduct(): ProductResponseModel
+    {
+        return $this->product;
     }
 
 }
