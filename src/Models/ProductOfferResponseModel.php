@@ -26,8 +26,8 @@ class ProductOfferResponseModel
         $this->completed_orders = $offer['completed_orders'];
         $this->rating = $offer['rating'];
         $this->retail_price = $offer['retail_price'];
-        $this->wholesale_price_tier_one = $offer['wholesale_price_tier_one'];
-        $this->wholesale_price_tier_two = $offer['wholesale_price_tier_two'];
+        $this->wholesale_price_tier_one = $offer['wholesale_price_tier_one'] ?? 0;
+        $this->wholesale_price_tier_two = $offer['wholesale_price_tier_two'] ?? 0;
         $this->stock_available = $offer['stock_available'];
         $this->invoiceable = $offer['invoicable'];
 
