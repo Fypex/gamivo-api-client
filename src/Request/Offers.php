@@ -63,11 +63,11 @@ class Offers extends GamivoClient
             'PUT',
             $this->links->changeOfferStatus($offer_id),
             $this->getHeaders('application/json', true),
-            $body
+            json_encode($body)
         );
 
         $response = $this->client->sendRequest($request);
-        return (bool)$this->handleResponse($response);
+        return $this->handleResponse($response);
 
     }
 
