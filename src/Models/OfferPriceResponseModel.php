@@ -33,12 +33,6 @@ class OfferPriceResponseModel
     public function __construct($data)
     {
 
-        echo '<pre>';
-        var_dump($data);
-        exit;
-
-
-
         $this->customer_price = new Price($data['customer_price']);
         $this->seller_price = new Price($data['seller_price']);
         $this->wholesale_price_tier_one = new Price($data['wholesale_price_tier_one']);
