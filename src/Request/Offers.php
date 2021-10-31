@@ -4,10 +4,12 @@ namespace Fypex\GamivoClient\Request;
 
 use Fypex\GamivoClient\Credentials\GamivoCredentials;
 use Fypex\GamivoClient\Denormalizer\Offers\OfferDenormalizer;
+use Fypex\GamivoClient\Denormalizer\Offers\OfferPriceDenormalizer;
 use Fypex\GamivoClient\Denormalizer\Offers\OffersDenormalizer;
 use Fypex\GamivoClient\Exception\GeneralException;
 use Fypex\GamivoClient\Filters\OffersFilter;
 use Fypex\GamivoClient\GamivoClient;
+use Fypex\GamivoClient\Models\OfferPriceResponseModel;
 use Fypex\GamivoClient\Models\OfferResponseModel;
 use Fypex\GamivoClient\Models\Price;
 use Fypex\GamivoClient\Request\links\OffersLinks;
@@ -141,6 +143,38 @@ class Offers extends GamivoClient
 
         $response = $this->client->sendRequest($request);
         return $this->handleResponse($response);
+
+    }
+
+    public function calculateCustomerPrice(
+        $offer_id,
+        Price $seller_price,
+        Price $seller_tier_one_price,
+        Price $seller_tier_two_price
+    ): OfferPriceResponseModel
+    {
+
+        if ($seller_price->getPrice() == 0){
+            throw new GeneralException('The seller_price parameter must be greater than 0');
+        }
+
+        $link = $this->links->calculateCustomerPrice(
+            $offer_id,
+            $seller_price,
+            $seller_tier_one_price,
+            $seller_tier_two_price
+        );
+
+        $request = $this->messageFactory->createRequest(
+            'GET',
+            $link,
+            $this->getHeaders('application/json', true),
+        );
+
+        $response = $this->client->sendRequest($request);
+        $data =  $this->handleResponse($response);
+
+        return (new OfferPriceDenormalizer())->denormalize($data);
 
     }
 

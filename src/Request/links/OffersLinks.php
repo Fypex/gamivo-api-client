@@ -4,6 +4,7 @@ namespace Fypex\GamivoClient\Request\links;
 
 use Fypex\GamivoClient\Filters\OffersFilter;
 use Fypex\GamivoClient\Gamivo;
+use Fypex\GamivoClient\Models\Price;
 
 class OffersLinks
 {
@@ -26,6 +27,28 @@ class OffersLinks
     public function changeOfferStatus($offer_id): string
     {
         return Gamivo::DEFAULT_URL.'/api/public/v1/offers/'.$offer_id.'/change-status';
+    }
+
+    public function calculateCustomerPrice(
+        $offer_id,
+        Price $seller_price,
+        Price $seller_tier_one_price,
+        Price $seller_tier_two_price
+    ): string
+    {
+
+        $params = [
+            'seller_price' => $seller_price->getPrice(),
+        ];
+
+        if ($seller_tier_one_price->getPrice() > 0){
+            $params['seller_tier_one_price'] = $seller_tier_one_price->getPrice();
+        }
+        if ($seller_tier_two_price->getPrice() > 0){
+            $params['seller_tier_two_price'] = $seller_tier_two_price->getPrice();
+        }
+
+        return Gamivo::DEFAULT_URL.'/api/public/v1/offers/calculate-customer-price/'.$offer_id.'?'.http_build_query($params);
     }
 
     public function editOffer($offer_id): string
