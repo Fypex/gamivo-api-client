@@ -179,4 +179,36 @@ class Offers extends GamivoClient
     }
 
 
+    public function calculateSellerPrice(
+        $offer_id,
+        Price $price,
+        Price $tier_one_price,
+        Price $tier_two_price
+    ): OfferPriceResponseModel
+    {
+
+        if ($price->getPrice() == 0){
+            throw new GeneralException('The seller_price parameter must be greater than 0');
+        }
+
+        $link = $this->links->calculateSellerPrice(
+            $offer_id,
+            $price,
+            $tier_one_price,
+            $tier_two_price
+        );
+
+        $request = $this->messageFactory->createRequest(
+            'GET',
+            $link,
+            $this->getHeaders('application/json', true),
+        );
+
+        $response = $this->client->sendRequest($request);
+        $data =  $this->handleResponse($response);
+
+        return (new OfferPriceDenormalizer())->denormalize($data);
+
+    }
+
 }

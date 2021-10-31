@@ -7,8 +7,8 @@ use Fypex\GamivoClient\Models\OfferPriceResponseModel;
 class OfferPriceDenormalizer
 {
 
-    public function denormalize($offer): OfferPriceResponseModel
+    public function denormalize($data): OfferPriceResponseModel
     {
-        return new OfferPriceResponseModel($offer);
+        return new OfferPriceResponseModel($data);
     }
 }

@@ -51,6 +51,28 @@ class OffersLinks
         return Gamivo::DEFAULT_URL.'/api/public/v1/offers/calculate-customer-price/'.$offer_id.'?'.http_build_query($params);
     }
 
+    public function calculateSellerPrice(
+        $offer_id,
+        Price $price,
+        Price $tier_one_price,
+        Price $tier_two_price
+    ): string
+    {
+
+        $params = [
+            'price' => $price->getPrice(),
+        ];
+
+        if ($tier_one_price->getPrice() > 0){
+            $params['tier_one_price'] = $tier_one_price->getPrice();
+        }
+        if ($tier_two_price->getPrice() > 0){
+            $params['tier_two_price'] = $tier_two_price->getPrice();
+        }
+
+        return Gamivo::DEFAULT_URL.'/api/public/v1/offers/calculate-seller-price/'.$offer_id.'?'.http_build_query($params);
+    }
+
     public function editOffer($offer_id): string
     {
         return Gamivo::DEFAULT_URL.'/api/public/v1/offers/'.$offer_id;
