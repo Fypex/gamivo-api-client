@@ -24,6 +24,11 @@ class OffersLinks
         return Gamivo::DEFAULT_URL.'/api/public/v1/offers/'.$id;
     }
 
+    public function getOfferByExternalId(string $id): string
+    {
+        return Gamivo::DEFAULT_URL.'/api/public/v1/offers/by-external-id/'.$id;
+    }
+
     public function changeOfferStatus($offer_id): string
     {
         return Gamivo::DEFAULT_URL.'/api/public/v1/offers/'.$offer_id.'/change-status';
@@ -59,6 +64,11 @@ class OffersLinks
     public function createOffer(): string
     {
         return Gamivo::DEFAULT_URL.'/api/public/v1/offers';
+    }
+
+    public function setExternalId(): string
+    {
+        return Gamivo::DEFAULT_URL.'/api/public/v1/offers/by-external-id';
     }
 
 }

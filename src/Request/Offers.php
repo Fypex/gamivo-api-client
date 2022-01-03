@@ -6,12 +6,14 @@ use Fypex\GamivoClient\Credentials\GamivoCredentials;
 use Fypex\GamivoClient\Denormalizer\Offers\OfferDenormalizer;
 use Fypex\GamivoClient\Denormalizer\Offers\OfferPriceDenormalizer;
 use Fypex\GamivoClient\Denormalizer\Offers\OffersDenormalizer;
+use Fypex\GamivoClient\Denormalizer\Offers\PutOffersExternalDenormalizer;
 use Fypex\GamivoClient\Exception\GeneralException;
 use Fypex\GamivoClient\Filters\OffersFilter;
 use Fypex\GamivoClient\GamivoClient;
 use Fypex\GamivoClient\Models\OfferPriceResponseModel;
 use Fypex\GamivoClient\Models\OfferResponseModel;
 use Fypex\GamivoClient\Models\Price;
+use Fypex\GamivoClient\Models\PutOfferExternalModel;
 use Fypex\GamivoClient\Request\links\OffersLinks;
 use Http\Client\HttpClient;
 
@@ -46,6 +48,19 @@ class Offers extends GamivoClient
         $request = $this->messageFactory->createRequest(
             'GET',
             $this->links->getOfferById($id),
+            $this->getHeaders('application/json', true)
+        );
+
+        $response = $this->client->sendRequest($request);
+        $data = $this->handleResponse($response);
+        return (new OfferDenormalizer())->denormalize($data);
+    }
+
+    public function getOfferByExternalId(string $id): OfferResponseModel
+    {
+        $request = $this->messageFactory->createRequest(
+            'GET',
+            $this->links->getOfferByExternalId($id),
             $this->getHeaders('application/json', true)
         );
 
@@ -178,5 +193,25 @@ class Offers extends GamivoClient
 
     }
 
+    public function setExternalId(int $offer_id, string $external_id): PutOfferExternalModel
+    {
+
+        $body = [
+            'offer_id' => $offer_id,
+            'external_id' => $external_id,
+        ];
+
+        $request = $this->messageFactory->createRequest(
+            'PUT',
+            $this->links->setExternalId(),
+            $this->getHeaders('application/json', true),
+            json_encode($body)
+        );
+
+        $response = $this->client->sendRequest($request);
+        $data = $this->handleResponse($response);
+        return (new PutOffersExternalDenormalizer())->denormalize($data);
+
+    }
 
 }

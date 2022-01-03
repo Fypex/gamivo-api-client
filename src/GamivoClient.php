@@ -4,6 +4,7 @@ namespace Fypex\GamivoClient;
 
 use Fypex\GamivoClient\Credentials\GamivoCredentials;
 use Fypex\GamivoClient\Exception\GeneralException;
+use Fypex\GamivoClient\Models\ErrorModel;
 use Fypex\GamivoClient\Request\Accounts;
 use Fypex\GamivoClient\Request\Offers;
 use Fypex\GamivoClient\Request\ProductOffers;
