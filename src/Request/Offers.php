@@ -128,6 +128,7 @@ class Offers extends GamivoClient
 
     public function createOffer(
         $product_id,
+        Price $seller_price,
         Price $tier_one_seller_price,
         Price $tier_two_seller_price,
         $wholesale_mode,
@@ -142,6 +143,7 @@ class Offers extends GamivoClient
 
         $body = [
             'product' => $product_id,
+            'seller_price' => $seller_price->getPrice(),
             'tier_one_seller_price' => $tier_one_seller_price->getPrice(),
             'tier_two_seller_price' => $tier_two_seller_price->getPrice(),
             'wholesale_mode' => $wholesale_mode,
