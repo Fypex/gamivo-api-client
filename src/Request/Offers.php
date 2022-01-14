@@ -134,7 +134,7 @@ class Offers extends GamivoClient
         $wholesale_mode,
         bool $status,
         int $keys
-    ): array
+    ): int
     {
 
         if ($wholesale_mode < 0 || $wholesale_mode > 2){
