@@ -155,7 +155,7 @@ class Offers extends GamivoClient
             'POST',
             $this->links->createOffer(),
             $this->getHeaders('application/json', true),
-            $body
+            json_encode($body)
         );
 
         $response = $this->client->sendRequest($request);
