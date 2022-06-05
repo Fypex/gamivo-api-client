@@ -7,6 +7,7 @@ use Fypex\GamivoClient\Exception\GeneralException;
 use Fypex\GamivoClient\Models\ErrorModel;
 use Fypex\GamivoClient\Request\Accounts;
 use Fypex\GamivoClient\Request\Offers;
+use Fypex\GamivoClient\Request\Orders;
 use Fypex\GamivoClient\Request\ProductOffers;
 use Fypex\GamivoClient\Request\Products;
 use Http\Client\HttpClient;
@@ -46,6 +47,11 @@ class GamivoClient
         return new Products($this->credentials, $this->client);
     }
 
+    public function orders(): Orders
+    {
+        return new Orders($this->credentials, $this->client);
+    }
+
     public function productOffers(): ProductOffers
     {
         return new ProductOffers($this->credentials, $this->client);
@@ -83,7 +89,8 @@ class GamivoClient
             throw new GeneralException('Response is not "application/json" type');
         }
         $data = json_decode((string)$response->getBody(), true);
-        if ($response->getStatusCode() !== 200) {
+
+        if ($response->getStatusCode() != 200 && $response->getStatusCode() != 201) {
             throw new GeneralException($data['message'], $response->getStatusCode());
         }
 
