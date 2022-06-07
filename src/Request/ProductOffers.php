@@ -28,7 +28,10 @@ class ProductOffers extends GamivoClient
     }
 
     /**
+     * @param int $product_id
      * @return array<ProductOfferResponseModel>
+     * @throws ClientExceptionInterface
+     * @throws GeneralException
      */
     public function getProductOffers(int $product_id): array
     {

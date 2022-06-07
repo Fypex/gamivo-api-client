@@ -7,9 +7,10 @@ use Fypex\GamivoClient\Models\ProductOfferResponseModel;
 class ProductOffersDenormalizer
 {
 
-    private $result;
+    private $result = [];
 
     /**
+     * @param $offers
      * @return array<ProductOfferResponseModel>
      */
     public function denormalize($offers): array
