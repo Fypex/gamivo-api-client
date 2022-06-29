@@ -16,7 +16,7 @@ class OrderDenormalizer
      */
     public static function denormalize(array $data): OrderResponseModel
     {
-        return new OrderResponseModel($data['id'], $data['total'], $data['status'], $data['external_id']);
+        return new OrderResponseModel($data['id'], $data['total'], $data['status'], $data['external_id'] ?? '');
     }
 
 }
